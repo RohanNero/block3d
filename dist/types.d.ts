@@ -106,4 +106,35 @@ declare function checkTokenRules(address: string, block3dConfig: Block3dConfig, 
  */
 declare function checkIsRoutePublic(currentPath: string, block3dConfig: Block3dConfig): Promise<boolean>;
 
-export { type Block3dConfig, Block3dConnectButton, Block3r, Block3rContent, QRCodeModal, type Rule, type UserData, checkIsRoutePublic, checkSimpleRules, checkTokenRules, useBlock3r };
+/**
+ * @param address is the currently connected user address
+ * @param block3dConfig is the block3d config object
+ * @param wagmiConfig is the wagmi config object
+ * @return `passing` is a Rule[] containing all nft rule checks the user passed
+ * @return `failing` is a Rule[] containing all nft rule checks the user failed
+ */
+declare function checkNftRules(address: string, block3dConfig: Block3dConfig, wagmiConfig: Config): Promise<{
+    nftPassing: Rule[];
+    nftFailing: Rule[];
+}>;
+
+declare const checkBlock3d: (address: `0x${string}` | undefined, chain: number | undefined, currentPath: string, block3dConfig: Block3dConfig, config: Config) => Promise<{
+    block3d: boolean;
+    userData: undefined;
+} | {
+    block3d: boolean;
+    userData: UserData;
+}>;
+
+interface RpcUrls {
+    [chainId: number]: string;
+}
+/**
+ * @dev This function views the wagmi config and retrieves any necessary provided RPC URLs, if none are provided we use the default values
+ * @param rules is an array of valid rule types
+ * @param wagmiConig is the current wagmi config object
+ * @return `rpcUrls` is an KV object with chainIds mapped to RPC URLs
+ */
+declare function getRpcUrls(rules: Rule[], wagmiConfig: Config): Promise<RpcUrls>;
+
+export { type Block3dConfig, Block3dConnectButton, Block3r, Block3rContent, QRCodeModal, type Rule, type UserData, checkBlock3d, checkIsRoutePublic, checkNftRules, checkSimpleRules, checkTokenRules, getRpcUrls, useBlock3r };

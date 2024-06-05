@@ -28,21 +28,17 @@ export function Block3r({
   block3dConfig,
 }: Block3rProps) {
   return (
-    <html lang="en">
-      <body>
-        <WagmiProvider config={wagmiConfig}>
-          <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider>
-              <Block3rContent
-                block3dConfig={block3dConfig}
-                wagmiConfig={wagmiConfig}
-              >
-                {children}
-              </Block3rContent>
-            </RainbowKitProvider>
-          </QueryClientProvider>
-        </WagmiProvider>
-      </body>
-    </html>
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>
+          <Block3rContent
+            block3dConfig={block3dConfig}
+            wagmiConfig={wagmiConfig}
+          >
+            {children}
+          </Block3rContent>
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }

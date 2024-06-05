@@ -6,12 +6,11 @@ import { Block3dConfig } from "../types/block3d";
  */
 export async function checkIsRoutePublic(
   currentPath: string,
-  block3dConfig: Block3dConfig,
+  block3dConfig: Block3dConfig
 ) {
   if (block3dConfig.publicRoutes.includes(currentPath)) {
-    console.log("Current page is public!");
     return true;
+  } else {
+    return false;
   }
-  console.log("Current page is not public!");
-  return false;
 }

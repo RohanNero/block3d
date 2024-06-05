@@ -1,11 +1,10 @@
 import React from "react";
-import Image from "next/image";
 import { Block3dConnectButton } from "./Block3dConnectButton";
 import { UserData } from "../types/block3d";
 import { Block3dTable } from "./Block3dTable";
 
-const block3dLogo = require("../../public/logo.png");
-const githubLogo = require("../../public/github-mark-white.png");
+import block3dLogo from "../../public/logo.png";
+import githubLogo from "../../public/github-mark-white.png";
 
 /**
  * @dev This component is displayed to the user when they aren't able to view the page
@@ -29,7 +28,7 @@ const Block3d = ({ userData }: { userData: UserData | undefined }) => {
               <div className="p-4 px-8 bg-blue-300 border rounded-lg flex items-center hidden xl:block">
                 <div className="rounded-full bg-gray-100">
                   <a target="_blank" href="https://block3d.gitbook.io/block3d">
-                    <Image
+                    <img
                       src={block3dLogo}
                       width={100}
                       height={100}
@@ -93,7 +92,7 @@ const Block3d = ({ userData }: { userData: UserData | undefined }) => {
             <div className="flex flex-row">
               <div className="p-4 px-8 bg-blue-300 border rounded-lg hidden xl:block">
                 <a target="_blank" href="https://github.com/RohanNero/Block3d">
-                  <Image
+                  <img
                     className="scale=[1.25]"
                     src={githubLogo}
                     width={100}
