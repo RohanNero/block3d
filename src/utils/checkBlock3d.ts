@@ -64,61 +64,28 @@ export const checkBlock3d = async (
     },
   };
 
-  /* Simple rule type checks 
-    If any simple rule checks failed and strict is set to true, we return block3d and userData */
-  if (
-    block3dConfig.strict === true &&
-    (simpleFailing?.length ? simpleFailing.length : 0) > 0
-  ) {
-    return { block3d: true, userData: userData };
-  }
-  /* If any simple rule checks passed and strict is set to false, we return block3d and userData */
-  if (
-    block3dConfig.strict === false &&
-    (simplePassing?.length ? simplePassing.length : 0) > 0
-  ) {
-    return { block3d: false, userData: userData };
-  }
+  const failing =
+    (userData.simple?.failing?.length ?? 0) +
+    (userData.token?.failing?.length ?? 0) +
+    (userData.nft?.failing?.length ?? 0);
+  const passing =
+    (userData.simple?.passing?.length ?? 0) +
+    (userData.token?.passing?.length ?? 0) +
+    (userData.nft?.passing?.length ?? 0);
 
-  /* Token rule type checks
-    If any token rule checks failed and strict is set to true, we return block3d and userData */
-  if (
-    block3dConfig.strict === true &&
-    (tokenFailing?.length ? tokenFailing.length : 0) > 0
-  ) {
+  if (block3dConfig.strict === true && failing > 0) {
+    /* If any rule checks failed and strict is set to true, the user is blocked */
     return { block3d: true, userData: userData };
-  }
-  /* If any token rule checks passed and strict is set to false, we return block3d and userData */
-  if (
-    block3dConfig.strict === false &&
-    (tokenPassing?.length ? tokenPassing.length : 0) > 0
-  ) {
-    return { block3d: false, userData: userData };
-  }
-
-  /* Nft rule type checks
-    If any nft rule checks failed and strict is set to true, we return block3d and userData */
-  if (
-    block3dConfig.strict === true &&
-    (nftFailing?.length ? nftFailing.length : 0) > 0
-  ) {
-    return { block3d: true, userData: userData };
-  }
-  /* If any nft rule checks passed and strict is set to false, we return block3d and userData */
-  if (
-    block3dConfig.strict === false &&
-    (nftPassing?.length ? nftPassing.length : 0) > 0
-  ) {
-    return { block3d: false, userData: userData };
-  }
-
-  /* If you reach the end of this function it means one of two things
-   * 1. strict rules are enabled and the user passed all of them
-   * 2. strict rules are disabeld and the user didn't pass any of them
-   */
-  if (block3dConfig.strict === true) {
+  } else if (block3dConfig.strict === false && passing > 0) {
+    /* If any rule checks passed and strict is set to false, the user isn't blocked */
     return { block3d: false, userData: userData };
   } else {
-    return { block3d: true, userData: userData };
+    /* If the code reachs this block it means one of two things:
+     * 1. strict rules are enabled and the user passed all of them
+     * 2. strict rules are disabeld and the user didn't pass any of them
+     * This means the block3d boolean indicating whether the user can view the page is
+     * equal to the inverse of the `strict` boolean value set inside the block3d config file
+     */
+    return { block3d: !block3dConfig.strict, userData: userData };
   }
 };
