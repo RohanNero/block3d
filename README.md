@@ -51,7 +51,7 @@ The `Block3r` component lives at the app's root and wraps the entire site. It co
 
 _If you are not using a layout file, wrap the root app.tsx file instead._
 
-Note: Currently your root layout must have `"use client";` declared at the top of the file.
+**Note:** Currently your root layout must have `"use client";` declared at the top of the file.
 
 ```typescript
 /*  src/app/layout.tsx  */
