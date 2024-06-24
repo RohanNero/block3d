@@ -1,5 +1,7 @@
 # Block3d
 
+![image](./public/block3d-infographic.png)
+
 Block3d is an open-source authentication toolkit designed to streamline access control within Nextjs dapps. Developers can dynamically restrict specific routes using a rule-based configuration.
 
 This `README` contains all the necessary information needed to integrate block3d into your nextjs project. You may view the [full documentation here](https://block3d.gitbook.io/block3d/).
