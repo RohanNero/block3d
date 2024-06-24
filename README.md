@@ -27,7 +27,7 @@ Block3d can be quickly installed by running this command:
 npm install block3d
 ```
 
-If you don't already have these installed, make sure to run this command as well:
+If you don't already have `wagmi` and `rainbowkit` installed, make sure to run this command as well:
 
 ```shell
 npm install wagmi @rainbow-me/rainbowkit
@@ -35,7 +35,7 @@ npm install wagmi @rainbow-me/rainbowkit
 
 ### Git Submodule
 
-Block3d also comes in the form of a git submodule. This allows you to quickly integrate the toolkit and, with minimal effort, be compatible with any future upgrades while maintaining a distinct separation of the submodule and the parent directory. This way you can also fork Block3d and directly edit it however you want.
+Block3d alternatively comes in the form of a git submodule. This allows you to quickly integrate the toolkit and, with minimal effort, be compatible with any future upgrades while maintaining a distinct separation of the submodule and the parent directory. This way you can also fork Block3d and directly edit it however you want.
 
 ```shell
 git submodule add https://github.com/RohanNero/block3d-submodule
@@ -189,7 +189,7 @@ const block3dConfig = {
     {
       title: "Hold at least 1 ETH",
       type: "token",
-      contract: [
+      contracts: [
         {
           address: "0x0000000000000000000000000000000000000000",
           chainId: 1,
@@ -200,7 +200,7 @@ const block3dConfig = {
     {
       title: "Hold at least 500 USDC",
       type: "token",
-      contract: [
+      contracts: [
         {
           address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           chainId: 1,
@@ -227,7 +227,7 @@ const block3dConfig = {
     {
       title: "Own a Milady",
       type: "nft",
-      contract: [
+      contracts: [
         {
           address: "0x5Af0D9827E0c53E4799BB226655A1de152A425a5",
           chainId: 1,
@@ -238,7 +238,7 @@ const block3dConfig = {
     {
       title: "Own a Remilio",
       type: "nft",
-      contract: [
+      contracts: [
         {
           address: "0xD3D9ddd0CF0A5F0BFB8f7fcEAe075DF687eAEBaB",
           chainId: 1,
@@ -249,7 +249,7 @@ const block3dConfig = {
     {
       title: "Own a Bonkler",
       type: "nft",
-      contract: [
+      contracts: [
         {
           address: "0xABFaE8A54e6817F57F9De7796044E9a60e61ad67",
           chainId: 1,
@@ -262,3 +262,9 @@ const block3dConfig = {
 
 export default block3dConfig;
 ```
+
+### Issues
+
+If you run into any issues or have any feature requests please open an issue [here](https://github.com/RohanNero/block3d/issues).
+
+Pull Requests are also welcome!

@@ -11,7 +11,7 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["srcc/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,

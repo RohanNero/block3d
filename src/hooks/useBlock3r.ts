@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { usePathname } from "next/navigation";
 import { UserData } from "../types/block3d";
 import { type Config, useAccount } from "wagmi";
 import { Block3dConfig } from "../types/block3d";
@@ -15,15 +15,16 @@ export function useBlock3r(block3dConfig: Block3dConfig, wagmiConfig: Config) {
   const [userData, setUserData] = useState<UserData | undefined>(undefined);
   const [block3d, setBlock3d] = useState<boolean>(true);
   const { address, chain } = useAccount();
+  const currentPath = usePathname();
 
   useEffect(() => {
     const checkAccess = async () => {
-      if (window.location.pathname) {
+      if (currentPath) {
         console.log("Validating user...");
         const { block3d, userData } = await checkBlock3d(
           address,
           chain?.id,
-          window.location.pathname,
+          currentPath,
           block3dConfig,
           wagmiConfig
         );
@@ -33,7 +34,7 @@ export function useBlock3r(block3dConfig: Block3dConfig, wagmiConfig: Config) {
     };
 
     checkAccess();
-  }, [chain, address, window.location.pathname, block3dConfig]);
+  }, [chain, address, currentPath, block3dConfig]);
 
   return { isBlock3d: block3d, userData: userData };
 }
