@@ -1,4 +1,4 @@
-# block3d
+# Block3d
 
 ![image](./public/block3d-infographic.png)
 
