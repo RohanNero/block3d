@@ -1,12 +1,14 @@
-# Block3d
+# block3d
 
-Block3d is an open-source authentication toolkit designed to streamline access control within Nextjs dapps. Developers can dynamically restrict specific routes using a rule-based configuration.
+![image](./public/block3d-infographic.png)
 
-This `README` contains all the necessary information needed to integrate block3d into your nextjs project. You may view the [full documentation here](https://block3d.gitbook.io/block3d/).
+**block3d** is an open-source authentication toolkit designed to streamline access control within Nextjs dapps. Developers can dynamically restrict specific routes using a rule-based configuration.
+
+This `README` contains all the necessary information needed to integrate **block3d** into your nextjs project. You may view the [full documentation here](https://block3d.gitbook.io/block3d/).
 
 # Getting Started
 
-Since Block3d uses Next.js 14, it also requires Node.js 18.17 or later.
+Since **block3d** uses Next.js 14, it also requires Node.js 18.17 or later.
 
 ## Creating next-app
 
@@ -21,7 +23,7 @@ Follow the steps under the Next.js Installation section.
 
 ### NPM Package
 
-Please note that some of Block3d's transitive dependencies rely on ws 8.13.0, which is a vulnerable version of ws that contains a high-level issue that has since then been [reviewed and patched](https://github.com/advisories/GHSA-3h5v-q93c-6h6q). To resolve these vulnerabilities you can set overrides in your package.json file like so:
+Please note that some of **block3d**'s transitive dependencies rely on ws 8.13.0, which is a vulnerable version of ws that contains a high-level issue that has since then been [reviewed and patched](https://github.com/advisories/GHSA-3h5v-q93c-6h6q). To resolve these vulnerabilities you can set overrides in your package.json file like so:
 
 ```json
 "overrides": {
@@ -34,7 +36,7 @@ Please note that some of Block3d's transitive dependencies rely on ws 8.13.0, wh
   }
 ```
 
-Block3d can then be installed by running this command:
+**block3d** can then be installed by running this command:
 
 ```shell
 npm install block3d
@@ -48,7 +50,7 @@ npm install wagmi @rainbow-me/rainbowkit @tanstack/react-query viem@2.x
 
 ### Git Submodule
 
-Block3d alternatively comes in the form of a git submodule. This allows you to maintain a distinct separation of the submodule and the parent directory, as well as allowing you to fork Block3d and directly edit it however you want.
+**block3d** alternatively comes in the form of a git submodule. This allows you to maintain a distinct separation of the submodule and the parent directory, as well as allowing you to fork **block3d** and directly edit it however you want.
 
 ```shell
 git submodule add https://github.com/RohanNero/block3d-submodule
