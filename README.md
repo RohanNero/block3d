@@ -1,7 +1,5 @@
 # Block3d
 
-![image](./public/block3d-infographic.png)
-
 Block3d is an open-source authentication toolkit designed to streamline access control within Nextjs dapps. Developers can dynamically restrict specific routes using a rule-based configuration.
 
 This `README` contains all the necessary information needed to integrate block3d into your nextjs project. You may view the [full documentation here](https://block3d.gitbook.io/block3d/).
@@ -23,21 +21,34 @@ Follow the steps under the Next.js Installation section.
 
 ### NPM Package
 
-Block3d can be quickly installed by running this command:
+Please note that some of Block3d's transitive dependencies rely on ws 8.13.0, which is a vulnerable version of ws that contains a high-level issue that has since then been [reviewed and patched](https://github.com/advisories/GHSA-3h5v-q93c-6h6q). To resolve these vulnerabilities you can set overrides in your package.json file like so:
+
+```json
+"overrides": {
+    "mipd": {
+      "ws": "8.17.1"
+    },
+    "viem": {
+      "ws": "8.17.1"
+    }
+  }
+```
+
+Block3d can then be installed by running this command:
 
 ```shell
 npm install block3d
 ```
 
-If you don't already have `wagmi` and `rainbowkit` installed, make sure to run this command as well:
+If you don't already have these installed, make sure to run this command as well:
 
 ```shell
-npm install wagmi @rainbow-me/rainbowkit
+npm install wagmi @rainbow-me/rainbowkit @tanstack/react-query viem@2.x
 ```
 
 ### Git Submodule
 
-Block3d alternatively comes in the form of a git submodule. This allows you to quickly integrate the toolkit and, with minimal effort, be compatible with any future upgrades while maintaining a distinct separation of the submodule and the parent directory. This way you can also fork Block3d and directly edit it however you want.
+Block3d alternatively comes in the form of a git submodule. This allows you to maintain a distinct separation of the submodule and the parent directory, as well as allowing you to fork Block3d and directly edit it however you want.
 
 ```shell
 git submodule add https://github.com/RohanNero/block3d-submodule
@@ -49,14 +60,14 @@ The `Block3r` component lives at the app's root and wraps the entire site. It co
 
 ### Example root
 
-_If you are not using a layout file, wrap the root app.tsx file instead._
-
-**Note:** Currently your root layout must have `"use client";` declared at the top of the file.
+Note: Currently your root layout must have `"use client";` declared at the top of the file.
 
 ```typescript
 /*  src/app/layout.tsx  */
 "use client";
 import { Block3r } from "block3d";
+import { block3dConfig } from "../../block3d.config";
+import { config } from "../../wagmi.config";
 
 export default function RootLayout({
   children,
@@ -66,33 +77,34 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Block3r>
+        <Block3r block3dConfig={block3dConfig} wagmiConfig={config}>
           {children}
         </Block3r>
       </body>
     </html>
   );
 }
+
 ```
 
 ## Config
 
-This section goes over the `blocked.config.ts` file in detail. The app regularly references the rules inside the config, so understanding this part is important.
+This section goes over the `blocked.config` file in detail. **block3d**'s behavior relies entirely on the rules inside the config, so understanding this part is important.
 
 ### Creating config
 
-Begin by creating a `block3d.config.ts` file at your project's root. Next, create a `block3dConfig` object and make sure it is exported.
+_The file's name and location can be altered._
+
+Begin by creating a `block3d.config.ts` file at your project's root. Next, create an exported `block3dConfig` object.
 
 ```typescript
 /*  block3d.config.ts  */
-const block3dConfig = {};
-
-export default block3dConfig;
+export const block3dConfig = {};
 ```
 
 #### Configuring page restriction
 
-Now that we have our block3dConfig object, we need to populate it with 3 things:
+Now that we have our `block3dConfig` object, we need to populate it with 3 things:
 
 - `publicRoutes` is an array of strings representing page routes that are marked as public, meaning that any configured rules don't apply to the pages listed inside it.
 - `strict` is a boolean. When marked true, all existing rule criteria must be met. When marked false, the user may view restricted pages as long as they meet the criteria for at least one rule.
@@ -124,8 +136,8 @@ type Contract = {
 There are three different types of rules:
 
 - `simple` rules are the most basic type and allow you to essentially whitelist any set of addresses that can then view your restricted pages. These rules consist of a `title`, `type`, and `addresses` field.
-- `token` rules allow you to restrict pages based on addresses that hold a `minimumBal` of any specified token. These rules consist of a `title`, `type`, `contract`, and at least one global `minimumBal` OR at least one `minimumBal` for each contract object.
-- `nft` rules are identical to token rules except that they pertain to **ERC-721** instead of **ERC-20**.
+- `token` rules allow you to restrict pages based on addresses that hold a `minimumBal` of any specified token. These rules consist of a `title`, `type`, `contracts`, and at least one global `minimumBal` OR at least one `minimumBal` for each `Contract` object.
+- `nft` rules are identical to `token` rules except that they pertain to **ERC-721** instead of **ERC-20**.
 
 #### `title`
 
@@ -141,7 +153,7 @@ This is a string representation of the minimum number of tokens/nfts that must b
 
 #### `contracts`
 
-Used only in token and nft rules, this is an array of Contract objects that includes details about the token/nft smart contract.
+Used only in token and nft rules, this is an array of `Contract` objects that includes details about the token/nft smart contract.
 
 - `address` is the smart contract address in string form. If using a chain's native currency, set this to the 0 address.
 - `chainId` is the blockchain chain ID that the smart contract exists on as type number.
@@ -163,7 +175,7 @@ This file is configured to block users that aren't listed in the "Open source co
 
 ```typescript
 /*  block3d.config.ts  */
-const block3dConfig = {
+export const block3dConfig = {
   publicRoutes: ["/"],
   strict: false,
   rules: [
@@ -174,8 +186,6 @@ const block3dConfig = {
     },
   ],
 };
-
-export default block3dConfig;
 ```
 
 #### Token
@@ -184,7 +194,7 @@ This file is configured to block users that don't own 1 ETH and 500 USDC on main
 
 ```typescript
 /*  block3d.config.ts  */
-const block3dConfig = {
+export const block3dConfig = {
   publicRoutes: [],
   strict: true,
   rules: [
@@ -212,8 +222,6 @@ const block3dConfig = {
     },
   ],
 };
-
-export default block3dConfig;
 ```
 
 #### NFT
@@ -269,4 +277,4 @@ export default block3dConfig;
 
 If you run into any issues or have any feature requests please open an issue [here](https://github.com/RohanNero/block3d/issues).
 
-Pull Requests are also welcome!
+[Pull Requests](https://github.com/RohanNero/block3d/pulls) are also welcome!
