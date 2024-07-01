@@ -30,10 +30,13 @@ export function QRCodeModal({
         console.error("Failed to copy:", error);
       });
   };
-  return (
-    <div
-      className={`bg-blue-300 p-6 w-full flex justify-center right-full items-center rounded-lg mt-2 z-50 ${qrModalVisible ? "" : "hidden"}`}
-    >
+  if (!qrModalVisible) {
+    return null;
+  } else {
+    return (
+      <div
+        className={`bg-blue-300 p-6 w-full flex justify-center right-full items-center rounded-lg mt-2 z-50`}
+      >
       <div className="flex flex-col items-center space-y-6 pt-6">
         {/* QR Code SVG*/}
         <div className="bg-white rounded-xl">

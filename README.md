@@ -112,6 +112,20 @@ Now that we have our `block3dConfig` object, we need to populate it with 3 thing
 - `strict` is a boolean. When marked true, all existing rule criteria must be met. When marked false, the user may view restricted pages as long as they meet the criteria for at least one rule.
 - `rules` is an array of Rule objects. This is where you can control exactly which users may view your app.
 
+```typescript
+export const block3dConfig = {
+publicRoutes: ["/", "/my-public-route"],
+strict: false,
+rules: [
+    {
+      title: "my-title",
+      type: "simple",
+      addresses: ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045"],
+    },
+  ],
+};
+```
+
 ### Creating rules
 
 The Rule type is defined like so:
